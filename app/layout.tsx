@@ -5,6 +5,9 @@ import siteConfig from "@/config/siteConfig";
 import {Noto_Sans} from "next/font/google";
 import {rootLayout} from '@/types/components';
 import {cn} from "@/lib/utils";
+import '@/styles/index.css';
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 // Defining font of page
 const NotoFont = Noto_Sans({
@@ -38,9 +41,11 @@ export const metadata = {
 export default function RootLayout({children}:rootLayout):ReactNode {
     // returning JSX
     return (
-        <html>
-            <body className={cn('overflow-x-hidden overflow-y-auto min-h-screen dark:bg-black bg-white', NotoFont.variable)}>
+        <html className={'dark'}>
+            <body className={cn('overflow-x-hidden overflow-y-auto min-h-screen dark:bg-slate-900 bg-slate-200', NotoFont.className)}>
+                <Header />
                 {children}
+                <Footer />
             </body>
         </html>
     );
