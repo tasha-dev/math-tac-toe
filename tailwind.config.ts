@@ -1,16 +1,16 @@
 // Codes by mahdi tasha
-// Importing type of configs of tailwindCSS
+// Importing types of configs of tailwindCSS
 import type { Config } from "tailwindcss"
 
 // Defining the configs of tailwindCSS
 const config = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
+    './components/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    './app/*.{ts,tsx}'
+  ],
   prefix: "",
   theme: {
     container: {

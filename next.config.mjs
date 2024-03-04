@@ -1,6 +1,6 @@
 // Codes by mahdi tasha
-// Importing config type
-/** @type {import('next').NextConfig} */
+// Importing config types
+/** @types {import('next').NextConfig} */
 
 // Defining the config of nextJS
 const nextConfig = {};
