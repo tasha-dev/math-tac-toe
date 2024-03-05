@@ -9,3 +9,8 @@ export interface container {
     children: ReactNode;
     className?: string;
 }
+
+export interface arrowLink {
+    title: string;
+    link: string;
+}

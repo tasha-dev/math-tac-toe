@@ -41,7 +41,7 @@ export const metadata = {
 export default function RootLayout({children}:rootLayout):ReactNode {
     // returning JSX
     return (
-        <html className={'dark'}>
+        <html className={'dark'} suppressHydrationWarning>
             <body className={cn('overflow-x-hidden overflow-y-auto min-h-screen dark:bg-slate-900 bg-slate-200', NotoFont.className)}>
                 <Header />
                 {children}
