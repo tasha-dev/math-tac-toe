@@ -11,7 +11,7 @@ export default function Container({size = 'lg', children, className}:container):
         <div
             className={cn(
                 'mx-auto p-[20px]',
-                (size === 'lg') ? 'max-w-[1000px]' : 'max-w-[500px]',
+                (size === 'lg') ? 'max-w-[1000px]' : 'max-w-[700px]',
                 className
             )}
         >
