@@ -1,17 +1,44 @@
 // Codes by mahdi tasha
-// Importing part
+// Importing config type of tailwindCSS
 import type { Config } from "tailwindcss"
 
-// Defining configs of tailwindCSS
+// Defining the configs
 const config = {
+  darkMode: ["class"],
   content: [
-    './app/*.{tsx,ts,js,jsx}',
-    './components/ui/*.{tsx,ts,js,jsx}',
-    './components/*.{tsx,ts,js,jsx}',
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
   ],
-  theme: {},
-  plugins: [],
-};
+  prefix: "",
+  theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
+    extend: {
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
+    },
+  },
+  plugins: [require("tailwindcss-animate")],
+} satisfies Config
 
-// Exporting the configs
-export default config
+// Exporting the configs as default
+export default config;
