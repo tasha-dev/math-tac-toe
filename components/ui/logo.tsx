@@ -10,7 +10,13 @@ export default function Logo():ReactNode {
     // Returning JSX
     return (
         <Link href={'/'}>
-            <Image className={'dark:invert'} alt={'Math tac toe logo'} src={logoImage.src} width={40} height={40} />
+            <Image
+                className={'dark:invert'}
+                alt={'Math tac toe logo'}
+                src={logoImage.src}
+                width={40}
+                height={40}
+            />
         </Link>
     );
 }
