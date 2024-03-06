@@ -14,3 +14,9 @@ export interface arrowLink {
     title: string;
     link: string;
 }
+
+export interface player {
+    turn: 1 | 2;
+    number: 1 | 2;
+    name?: string;
+}
