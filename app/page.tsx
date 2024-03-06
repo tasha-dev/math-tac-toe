@@ -25,6 +25,17 @@ export default function Home():ReactNode {
         54, 56, 63, 64, 72, 81,
     ];
 
+    useEffect(() => {
+        // Removing all choices when the box is filled
+        const concattedArray = [...player1Boxes].concat([...player2Boxes]);
+        const newArray = boxNumbers.filter(item => !concattedArray.includes(item));
+
+        if (newArray[0] == undefined) {
+            setPlayer1Boxes([]);
+            setPlayer2Boxes([]);
+        }
+    }, [player1Boxes, player2Boxes]);
+
     // Returning JSX
     return (
         <Container size={'sm'}>

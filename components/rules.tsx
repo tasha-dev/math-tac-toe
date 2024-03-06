@@ -51,10 +51,6 @@ export default function Rules():ReactNode {
                             The result of the multiplication determines the color of the corresponding box.
                         </DrawerDescription>
                     </div>
-                    <div>
-                        <DrawerTitle className={'mb-2'}>Modes:</DrawerTitle>
-                        <DrawerDescription>The game supports 2 Players and single player with pc</DrawerDescription>
-                    </div>
                 </ScrollArea>
                 <DrawerFooter>
                     <DrawerClose asChild>

@@ -15,17 +15,6 @@ Math Tac To is a simple and engaging game developed with TypeScript, Next.js, Ta
     ```
 
 - Players should provide two numbers to be multiplied, and the result will get the box.
-
-## Modes
-
-### 1. 2 Players
-
-In this mode, two players take turns providing numbers for multiplication to get the boxes. The first player to achieve 4 boxes in a winning pattern wins the game.
-
-### 2. Play with PC
-
-Challenge the computer in this mode. The PC will make its moves based on a strategy. Try to outsmart it and reach 4 colored boxes before it does.
-
 ## Technologies Used
 
 - TypeScript
