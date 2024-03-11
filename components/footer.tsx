@@ -10,7 +10,7 @@ export default function Footer():ReactNode {
     return (
         <footer>
             <Container>
-                <ul className={'list-disc ml-2 dark:[&>li]:text-white [&>li]:text-black'}>
+                <ul className={'list-disc ml-2 dark:[&>li]:text-white [&>li]:text-black flex flex-col gap-[20px]'}>
                     <li><ArrowLink link={'https://github.com/tasha-dev/'} title={'Github'}/></li>
                     <li><ArrowLink link={'https://www.linkedin.com/in/mahditasha/'} title={'Linkedin'}/></li>
                 </ul>

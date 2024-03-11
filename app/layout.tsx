@@ -8,6 +8,7 @@ import {cn} from "@/lib/utils";
 import '@/styles/index.css';
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import {Toaster} from "@/components/ui/toaster";
 
 // Defining font of page
 const NotoFont = Noto_Sans({
@@ -43,6 +44,7 @@ export default function RootLayout({children}:rootLayout):ReactNode {
     return (
         <html className={'dark'} suppressHydrationWarning>
             <body className={cn('overflow-x-hidden overflow-y-auto min-h-screen dark:bg-slate-900 bg-slate-200', NotoFont.className)}>
+                <Toaster />
                 <Header />
                 {children}
                 <Footer />

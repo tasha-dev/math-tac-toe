@@ -8,6 +8,7 @@ import Container from "@/components/ui/container";
 import Player from "@/components/player";
 import {cn} from "@/lib/utils";
 import {Button} from "@/components/ui/button";
+import {useToast} from "@/components/ui/use-toast";
 
 // Creating and exporting home page as default
 export default function Home():ReactNode {
@@ -21,12 +22,18 @@ export default function Home():ReactNode {
         54, 56, 63, 64, 72, 81,
     ];
 
+    // Defining toasts
+    const { toast } = useToast()
+
     // Defining states of component
     const [player1Boxes, setPlayer1Boxes] = useState<number[]>([]);
+    const [player1BoxesIndex, setPlayer1BoxesIndex] = useState<number[]>([]);
     const [player2Boxes, setPlayer2Boxes] = useState<number[]>([]);
+    const [player2BoxesIndex, setPlayer2BoxesIndex] = useState<number[]>([]);
     const [latestNumber, setLatestNumber] = useState<number>();
     const [numbersToActivate, setNumbersToActivate] = useState<number[]>(boxNumbers);
     const [turn, setTurn] = useState<1 | 2>(1);
+    const [winner, setWinner] = useState<1 | 2>();
 
     const multiplyNumbers:{
         number: number,
@@ -70,20 +77,65 @@ export default function Home():ReactNode {
         {number: 81, multiply: [[9, 9]]}
     ];
 
+    // Defining a function to reset
+    function reset():void {
+        setPlayer1Boxes([]);
+        setPlayer1BoxesIndex([]);
+        setPlayer2Boxes([]);
+        setPlayer2BoxesIndex([]);
+        setNumbersToActivate(boxNumbers);
+        setTurn(1);
+        setLatestNumber(undefined);
+        setWinner(undefined);
+    }
+
     useEffect(() => {
+        // Defining a function to check if there is 4 numbers which come one after another in an array of numbers
+        function hasConsecutiveNumbers(array:number[]):boolean {
+            for (let i = 0; i < array.length - 3; i++) {
+                if (array[i] + 1 === array[i + 1] &&
+                    array[i + 1] + 1 === array[i + 2] &&
+                    array[i + 2] + 1 === array[i + 3]) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        // Defining a function to check if 4 numbers of array are 6 more than other
+        function hasIncrementedBySix(array:number[]):boolean {
+            let consecutiveCount = 1;
+
+            for (let i = 0; i < array.length - 1; i++) {
+                if (array[i + 1] - array[i] === 6) {
+                    consecutiveCount++;
+                } else {
+                    consecutiveCount = 1;
+                }
+
+                if (consecutiveCount === 4) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         // Setting numbers to activate
         const mutiplyOfCurrentNumber = multiplyNumbers.find(item => item.number === latestNumber)?.multiply;
 
-        mutiplyOfCurrentNumber?.forEach((numberArray) => {
-            const firstNumber = numberArray[0];
-            const secondNumber = numberArray[1];
+        // Finding the winner
+        const sortedIndex1 = player1BoxesIndex.sort((a, b) => a - b);
+        const sortedIndex2 = player2BoxesIndex.sort((a, b) => a - b);
 
-            const multiplyFirst:number[] = [firstNumber * 1, firstNumber * 2, firstNumber * 3, firstNumber * 4, firstNumber * 5, firstNumber * 6, firstNumber * 7, firstNumber * 8, firstNumber * 9];
-            const multiplySecond:number[] = [secondNumber * 1, secondNumber * 2, secondNumber * 3, secondNumber * 4, secondNumber * 5, secondNumber * 6, secondNumber * 7, secondNumber * 8, secondNumber * 9];
-
-            const concattedArray = multiplyFirst.concat(multiplySecond);
-            setNumbersToActivate(concattedArray);
-        })
+        if (hasConsecutiveNumbers(sortedIndex1) || hasIncrementedBySix(sortedIndex1)) {
+            toast({title: "Player One Wins"});
+            reset();
+        } else if (hasConsecutiveNumbers(sortedIndex2) || hasIncrementedBySix(sortedIndex2)) {
+            toast({title: "Player two Wins"});
+            reset();
+        }
     }, [player1Boxes, player2Boxes]);
 
     // Returning JSX
@@ -95,13 +147,7 @@ export default function Home():ReactNode {
             </div>
             <Button
                 className={'w-full my-[20px]'}
-                onClick={() => {
-                    setPlayer1Boxes([]);
-                    setPlayer2Boxes([]);
-                    setLatestNumber(0)
-                    setNumbersToActivate(boxNumbers)
-                    setTurn(1)
-                }}
+                onClick={() => reset()}
             >
                 Reset
             </Button>
@@ -128,20 +174,32 @@ export default function Home():ReactNode {
                                         numbersToActivate.includes(item)
                                     ) {
                                         const array = [...player1Boxes];
+                                        const indexArray = [...player1BoxesIndex];
+
                                         array.push(item);
+                                        indexArray.push(index + 1);
 
                                         setPlayer1Boxes(array);
                                         setTurn(2);
                                         setLatestNumber(item);
+                                        setPlayer1BoxesIndex(indexArray);
                                     }
                                 } else {
-                                    if (!player1Boxes.includes(item) && !player2Boxes.includes(item) && numbersToActivate.includes(item)) {
+                                    if (
+                                        !player1Boxes.includes(item) &&
+                                        !player2Boxes.includes(item) &&
+                                        numbersToActivate.includes(item)
+                                    ) {
                                         const array = [...player2Boxes];
+                                        const indexArray = [...player2BoxesIndex];
+
                                         array.push(item);
+                                        indexArray.push(index + 1);
 
                                         setPlayer2Boxes(array);
                                         setTurn(1);
                                         setLatestNumber(item);
+                                        setPlayer2BoxesIndex(indexArray);
                                     }
                                 }
                             }}
@@ -151,27 +209,6 @@ export default function Home():ReactNode {
                     ))
                 }
             </div>
-            {
-                (player1Boxes[0] !== undefined)
-                    ? (
-                        <div className={'grid grid-cols-2 gap-[10px] mt-[20px]'}>
-                            <ul className={'list-disc dark:[&>li]:text-white [&>li]:text-black ml-4'}>
-                                {
-                                    player1Boxes.map((item, index) => (
-                                        <li key={index}>{item}</li>
-                                    ))
-                                }
-                            </ul>
-                            <ul className={'list-disc dark:[&>li]:text-white [&>li]:text-black ml-4'}>
-                                {
-                                    player2Boxes.map((item, index) => (
-                                        <li key={index}>{item}</li>
-                                    ))
-                                }
-                            </ul>
-                        </div>
-                    ) : false
-            }
         </Container>
     );
 }
