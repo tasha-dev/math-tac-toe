@@ -12,7 +12,7 @@ export default function Player({turn, number, name = `Player ${number}`}:player)
             <div
                 data-turn={(turn === number)}
                 className={cn(
-                    'w-[40px] h-[40px] rounded-[10px] shadow-xl transition-all duration-500 data-[turn="false"]:shadow-transparent dark:data-[turn="true"]:shadow-white/20 data-[turn="true"]:shadow-black/50',
+                    'w-[40px] h-[40px] rounded-[10px] border-2 border-transparent transition-all duration-500 dark:data-[turn="true"]:border-white data-[turn="true"]:border-black',
                     (number === 1) ? 'bg-red-600' : 'bg-blue-600'
                 )}
             />
