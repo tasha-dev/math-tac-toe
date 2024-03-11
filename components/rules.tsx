@@ -31,8 +31,8 @@ export default function Rules():ReactNode {
                 <ScrollArea className={'px-4 lg:h-[30dvh] h-[50dvh]'}>
                     <div className={'mb-4'}>
                         <DrawerTitle className={'mb-2'}>Objective:</DrawerTitle>
-                        <DrawerDescription>Be the first player to colorize four boxes either vertically, horizontally,
-                            or diagonally on the 6x6 grid.</DrawerDescription>
+                        <DrawerDescription>When a numbers is selected there are some factors for it which the next selectable numbers should be selected by one of these</DrawerDescription>
+                        <DrawerDescription>Be the first player to colorize four boxes either vertically, horizontally on the 6x6 grid.</DrawerDescription>
                     </div>
                     <div className={'mb-4'}>
                         <DrawerTitle className={'mb-2'}>Game Board:</DrawerTitle>
@@ -42,7 +42,7 @@ export default function Rules():ReactNode {
                     <div className={'mb-4'}>
                         <DrawerTitle className={'mb-2'}>Winning Conditions:</DrawerTitle>
                         <DrawerDescription>Achieve victory by coloring four boxes in a row, either vertically,
-                            horizontally, or diagonally.</DrawerDescription>
+                            horizontally.</DrawerDescription>
                     </div>
                     <div className={'mb-4'}>
                         <DrawerTitle className={'mb-2'}>Gameplay:</DrawerTitle>

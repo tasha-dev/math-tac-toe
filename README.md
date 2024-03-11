@@ -2,7 +2,7 @@
 Math Tac To is a simple and engaging game developed with TypeScript, Next.js, TailwindCSS, and shadcn/ui.
 
 ## Game Rules
-- The first player who reaches 4 boxes wins, considering vertical, horizontal, and criss-cross alignments.
+- The first player who reaches 4 boxes wins, considering vertical, horizontal alignments.
 - The game board is a 6x6 grid, composed of smaller boxes numbered as follows:
 
     ```
