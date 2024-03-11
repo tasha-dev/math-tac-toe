@@ -125,6 +125,17 @@ export default function Home():ReactNode {
         // Setting numbers to activate
         const mutiplyOfCurrentNumber = multiplyNumbers.find(item => item.number === latestNumber)?.multiply;
 
+        mutiplyOfCurrentNumber?.forEach((numberArray) => {
+            const firstNumber = numberArray[0];
+            const secondNumber = numberArray[1];
+
+            const multiplyFirst:number[] = [firstNumber * 1, firstNumber * 2, firstNumber * 3, firstNumber * 4, firstNumber * 5, firstNumber * 6, firstNumber * 7, firstNumber * 8, firstNumber * 9];
+            const multiplySecond:number[] = [secondNumber * 1, secondNumber * 2, secondNumber * 3, secondNumber * 4, secondNumber * 5, secondNumber * 6, secondNumber * 7, secondNumber * 8, secondNumber * 9];
+
+            const concattedArray = multiplyFirst.concat(multiplySecond);
+            setNumbersToActivate(concattedArray);
+        })
+
         // Finding the winner
         const sortedIndex1 = player1BoxesIndex.sort((a, b) => a - b);
         const sortedIndex2 = player2BoxesIndex.sort((a, b) => a - b);
