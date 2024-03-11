@@ -6,7 +6,7 @@
 import {ReactNode, useEffect, useState} from "react";
 import Container from "@/components/ui/container";
 import Player from "@/components/player";
-import {cn} from "@/lib/utils";
+import {cn, playAudio} from "@/lib/utils";
 import {Button} from "@/components/ui/button";
 import {useToast} from "@/components/ui/use-toast";
 
