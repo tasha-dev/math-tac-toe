@@ -12,7 +12,7 @@ import {game} from "@/types/components";
 
 // Creating and exporting game itself as default
 export default function Game({player2}: game): ReactNode {
-// Defining array of box numbers
+    // Defining array of box numbers
     const boxNumbers: number[] = [
         1, 2, 3, 4, 5, 6,
         7, 8, 9, 10, 12, 14,
@@ -103,24 +103,7 @@ export default function Game({player2}: game): ReactNode {
         // Finding the winner
         function checkWin(choices:number[]):boolean {
             // Define winning patterns for horizontal, vertical, and diagonal sequences
-            const winningPatterns = [
-                [1, 2, 3, 4, 5], [2, 3, 4, 5, 6], // Horizontal
-                [7, 8, 9, 10, 12], [8, 9, 10, 12, 14], // Horizontal
-                [15, 16, 18, 20, 21], [16, 18, 20, 21, 24], // Horizontal
-                [25, 27, 28, 30, 32], [27, 28, 30, 32, 35], // Horizontal
-                [36, 40, 42, 45, 48], [40, 42, 45, 48, 49], // Horizontal
-                [54, 56, 63, 64, 72], [56, 63, 64, 72, 81], // Horizontal
-                [1, 7, 15, 25, 36], [7, 15, 25, 36, 54], // Vertical
-                [2, 8, 16, 27, 40], [8, 16, 27, 40, 56], // Vertical
-                [3, 9, 18, 28, 42], [9, 18, 28, 42, 63], // Vertical
-                [4, 10, 20, 30, 45], [10, 20, 30, 45, 64], // Vertical
-                [5, 12, 21, 32, 48], [12, 21, 32, 48, 72], // Vertical
-                [6, 14, 24, 35, 49], [14, 24, 35, 49, 81], // Vertical
-                [1, 8, 18, 30, 45], [2, 9, 20, 32, 48], [3, 10, 21, 35, 49], // Diagonal
-                [7, 16, 28, 42, 64], [8, 18, 30, 45, 72], [15, 27, 40, 56, 81], // Diagonal
-                [5, 10, 18, 27, 36], [12, 20, 28, 40, 54], [21, 30, 42, 56, 63], // Diagonal
-                [2, 9, 20, 32, 49], [1, 10, 21, 35, 56], [8, 18, 30, 45, 64] // Diagonal
-            ];
+            const winningPatterns = [[1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6], [4, 5, 6, 7], [5, 6, 7, 8], [6, 7, 8, 9]];
 
             // Check each winning pattern
             for (const pattern of winningPatterns) {
