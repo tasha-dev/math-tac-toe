@@ -5,7 +5,7 @@
 // Importing part
 import {ReactNode, useEffect, useState} from "react";
 import Player from "@/components/player";
-import {cn, playAudio} from "@/lib/utils";
+import {cn} from "@/lib/utils";
 import {Button} from "@/components/ui/button";
 import {useToast} from "@/components/ui/use-toast";
 import {game} from "@/types/components";

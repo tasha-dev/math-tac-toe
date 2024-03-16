@@ -7,9 +7,3 @@ import { twMerge } from "tailwind-merge"
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
-
-// Creating and exporting function to play audio
-export function playAudio(route:string):void {
-  const audio = new Audio(route);
-  audio.play();
-}
