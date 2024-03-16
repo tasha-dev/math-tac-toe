@@ -42,7 +42,7 @@ export default function Rules():ReactNode {
                     <div className={'mb-4'}>
                         <DrawerTitle className={'mb-2'}>Winning Conditions:</DrawerTitle>
                         <DrawerDescription>Achieve victory by coloring four boxes in a row, either vertically,
-                            horizontally.</DrawerDescription>
+                            horizontally and criss-cross alignments.</DrawerDescription>
                     </div>
                     <div className={'mb-4'}>
                         <DrawerTitle className={'mb-2'}>Gameplay:</DrawerTitle>

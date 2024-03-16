@@ -11,7 +11,7 @@ import {Button} from "@/components/ui/button";
 // Creating and exporting home page as default
 export default function Home():ReactNode {
     // Defining state of component
-    const [player2, setPlayer2] = useState<'pc' | 'person'>('');
+    const [player2, setPlayer2] = useState<'pc' | 'person'>();
 
     // Returning JSX
     return (

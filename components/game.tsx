@@ -27,9 +27,7 @@ export default function Game({player2}: game): ReactNode {
 
     // Defining states of component
     const [player1Boxes, setPlayer1Boxes] = useState<number[]>([]);
-    const [player1BoxesIndex, setPlayer1BoxesIndex] = useState<number[]>([]);
     const [player2Boxes, setPlayer2Boxes] = useState<number[]>([]);
-    const [player2BoxesIndex, setPlayer2BoxesIndex] = useState<number[]>([]);
     const [latestNumber, setLatestNumber] = useState<number>();
     const [numbersToActivate, setNumbersToActivate] = useState<number[]>(boxNumbers);
     const [turn, setTurn] = useState<1 | 2>(1);
@@ -80,48 +78,14 @@ export default function Game({player2}: game): ReactNode {
     // Defining a function to reset
     function reset(): void {
         setPlayer1Boxes([]);
-        setPlayer1BoxesIndex([]);
         setPlayer2Boxes([]);
-        setPlayer2BoxesIndex([]);
+        setLatestNumber(undefined);
         setNumbersToActivate(boxNumbers);
         setTurn(1);
-        setLatestNumber(undefined);
         setWinner(undefined);
     }
 
     useEffect(() => {
-        // Defining a function to check if there is 4 numbers which come one after another in an array of numbers
-        function hasConsecutiveNumbers(array: number[]): boolean {
-            for (let i = 0; i < array.length - 3; i++) {
-                if (array[i] + 1 === array[i + 1] &&
-                    array[i + 1] + 1 === array[i + 2] &&
-                    array[i + 2] + 1 === array[i + 3]) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        // Defining a function to check if 4 numbers of array are 6 more than other
-        function hasIncrementedBySix(array: number[]): boolean {
-            let consecutiveCount = 1;
-
-            for (let i = 0; i < array.length - 1; i++) {
-                if (array[i + 1] - array[i] === 6) {
-                    consecutiveCount++;
-                } else {
-                    consecutiveCount = 1;
-                }
-
-                if (consecutiveCount === 4) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         // Setting numbers to activate
         const mutiplyOfCurrentNumber = multiplyNumbers.find(item => item.number === latestNumber)?.multiply;
 
@@ -137,30 +101,61 @@ export default function Game({player2}: game): ReactNode {
         })
 
         // Finding the winner
-        const sortedIndex1 = player1BoxesIndex.sort((a, b) => a - b);
-        const sortedIndex2 = player2BoxesIndex.sort((a, b) => a - b);
+        function checkWin(choices:number[]):boolean {
+            // Define winning patterns for horizontal, vertical, and diagonal sequences
+            const winningPatterns = [
+                [1, 2, 3, 4, 5], [2, 3, 4, 5, 6], // Horizontal
+                [7, 8, 9, 10, 12], [8, 9, 10, 12, 14], // Horizontal
+                [15, 16, 18, 20, 21], [16, 18, 20, 21, 24], // Horizontal
+                [25, 27, 28, 30, 32], [27, 28, 30, 32, 35], // Horizontal
+                [36, 40, 42, 45, 48], [40, 42, 45, 48, 49], // Horizontal
+                [54, 56, 63, 64, 72], [56, 63, 64, 72, 81], // Horizontal
+                [1, 7, 15, 25, 36], [7, 15, 25, 36, 54], // Vertical
+                [2, 8, 16, 27, 40], [8, 16, 27, 40, 56], // Vertical
+                [3, 9, 18, 28, 42], [9, 18, 28, 42, 63], // Vertical
+                [4, 10, 20, 30, 45], [10, 20, 30, 45, 64], // Vertical
+                [5, 12, 21, 32, 48], [12, 21, 32, 48, 72], // Vertical
+                [6, 14, 24, 35, 49], [14, 24, 35, 49, 81], // Vertical
+                [1, 8, 18, 30, 45], [2, 9, 20, 32, 48], [3, 10, 21, 35, 49], // Diagonal
+                [7, 16, 28, 42, 64], [8, 18, 30, 45, 72], [15, 27, 40, 56, 81], // Diagonal
+                [5, 10, 18, 27, 36], [12, 20, 28, 40, 54], [21, 30, 42, 56, 63], // Diagonal
+                [2, 9, 20, 32, 49], [1, 10, 21, 35, 56], [8, 18, 30, 45, 64] // Diagonal
+            ];
 
-        if (hasConsecutiveNumbers(sortedIndex1) || hasIncrementedBySix(sortedIndex1)) {
-            toast({title: "Player One Wins"});
-            reset();
-        } else if (hasConsecutiveNumbers(sortedIndex2) || hasIncrementedBySix(sortedIndex2)) {
-            toast({title: "Player Two Wins"});
-            reset();
+            // Check each winning pattern
+            for (const pattern of winningPatterns) {
+                const intersection = choices.filter((num:number) => pattern.includes(num));
+                if (intersection.length >= 4) {
+                    return true; // Found a winning pattern
+                }
+            }
+
+            return false; // No winning pattern found
+        }
+
+        if (player1Boxes.length !== 0 && player2Boxes.length !== 0) {
+            const is1Winner = checkWin(player1Boxes.sort());
+            const is2Winner = checkWin(player2Boxes.sort());
+
+            if (is1Winner) {
+                toast({title: 'Player 1 won'});
+                reset();
+            } else if (is2Winner) {
+                toast({title: 'Player 2 won'});
+                reset();
+            }
         }
     }, [player1Boxes, player2Boxes]);
 
+    // Using useEffect hook to play while mode is set to pc
     useEffect(() => {
         if (turn === 2 && player2 === 'pc') {
-            const randomNumber = numbersToActivate[Math.floor(Math.random() * numbersToActivate.length - 1)];
-            const array = [...player2Boxes];
-            const indexOfItem = boxNumbers.indexOf(randomNumber);
-            const boxIndex = [...player2BoxesIndex];
+            const availibleBoxes = numbersToActivate.filter(item => !player1Boxes.includes(item) && !player2Boxes.includes(item));
+            const randomNumber = availibleBoxes[Math.floor(Math.random() * availibleBoxes.length)];
+            const player2choicesCopy = [...player2Boxes];
 
-            array.push(randomNumber);
-            boxIndex.push(indexOfItem);
-
-            setPlayer2Boxes(array);
-            setPlayer2BoxesIndex(boxIndex);
+            player2choicesCopy.push(randomNumber);
+            setPlayer2Boxes(player2choicesCopy);
             setTurn(1);
         }
     }, [turn]);
@@ -201,15 +196,12 @@ export default function Game({player2}: game): ReactNode {
                                         numbersToActivate.includes(item)
                                     ) {
                                         const array = [...player1Boxes];
-                                        const indexArray = [...player1BoxesIndex];
 
                                         array.push(item);
-                                        indexArray.push(index + 1);
 
                                         setPlayer1Boxes(array);
                                         setTurn(2);
                                         setLatestNumber(item);
-                                        setPlayer1BoxesIndex(indexArray);
                                     }
                                 } else {
                                     if (
@@ -219,15 +211,12 @@ export default function Game({player2}: game): ReactNode {
                                         numbersToActivate.includes(item)
                                     ) {
                                         const array = [...player2Boxes];
-                                        const indexArray = [...player2BoxesIndex];
 
                                         array.push(item);
-                                        indexArray.push(index + 1);
 
                                         setPlayer2Boxes(array);
                                         setTurn(1);
                                         setLatestNumber(item);
-                                        setPlayer2BoxesIndex(indexArray);
                                     }
                                 }
                             }}
